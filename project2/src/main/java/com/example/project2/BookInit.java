@@ -4,6 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
+
 @Configuration
 public class BookInit {
 
@@ -14,9 +16,10 @@ public class BookInit {
 
     public void init(BookRepository repository) {
 
-        repository.save(new Book("Harry Potter", "Magic School"));
-        repository.save(new Book("Matilda", "A little girl with a powerful mind"));
-        repository.save(new Book("Miss Marple", "Old lady solving mystries"));
+        LocalDateTime dateTime = LocalDateTime.now();
+        repository.save(new Book("Harry Potter", "Magic School", dateTime));
+        repository.save(new Book("Matilda", "A little girl with a powerful mind", dateTime));
+        repository.save(new Book("Miss Marple", "Old lady solving mystries", dateTime));
 
 
     }
