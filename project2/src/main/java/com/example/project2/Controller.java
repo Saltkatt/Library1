@@ -19,7 +19,6 @@ public class Controller {
 
     public Controller (BookRepository repository) {
         this.repository = repository;
-
     }
 
     @GetMapping("/getBooks")
@@ -35,7 +34,7 @@ public class Controller {
                 .orElseThrow( () -> new BooksException("No books with id:" + bookId));
     }
 
-    @GetMapping("/getBook/{bookTitle")
+    @GetMapping("/getBook/{bookTitle}")
     public Book getBookByTitle(@PathVariable String bookName) {
         logger.info("Get book by title.");
         return repository.findByBookName(bookName).orElseThrow( ()-> new BooksException("No book with title: " + bookName));
