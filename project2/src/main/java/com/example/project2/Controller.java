@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/library")
@@ -23,39 +22,47 @@ public class Controller {
 
     }
 
-    @GetMapping("/books")
-    public List<Book> getAll() {
-        logger.info("get all books in repository");
+    @GetMapping("/getBooks")
+    public Iterable<Book> getAllBooks() {
+        logger.info("Get all books in repository.");
         return repository.findAll();
     }
 
-    @GetMapping("/book/{bookId}")
+    @GetMapping("/getBook/{bookId}")
     public Book getOne(@PathVariable Long bookId){
-        logger.info("get one book from repository");
+        logger.info("Get book by ID.");
         return repository.findById(bookId)
                 .orElseThrow( () -> new BooksException("No books with id:" + bookId));
     }
 
-    @PostMapping("/addbook")
+    @GetMapping("/getBook/{bookTitle")
+    public Book getBookByTitle(@PathVariable String bookName) {
+        logger.info("Get book by title.");
+        return repository.findByBookName(bookName).orElseThrow( ()-> new BooksException("No book with title: " + bookName));
+    }
+
+    @PostMapping("/addBook")
     public Book create(@RequestBody Book book) {
-       logger.info("add book to repository");
+       logger.info("Book added to repository.");
+        book.setDate(LocalDate.now());
         return repository.save(book);
     }
 
-    @DeleteMapping("/removebook{bookId}")
+    @DeleteMapping("/removeBook/{bookId}")
     public void delete(@PathVariable Long bookId){
-        logger.info("remove a book from repository");
+        logger.info("Book removed from repository.");
         repository.deleteById(bookId);
     }
 
-    @PutMapping("/updatebook{bookId}")
+    @PutMapping("/updateBook/{bookId}")
     public Book change(@RequestBody Book book, @PathVariable Long bookId){
-        logger.info("update book in repository");
+        logger.info("Book updated.");
         return repository.findById(bookId).map(storedBook -> {
             storedBook.setBookName(book.getBookName());
             storedBook.setDescription(book.getDescription());
+            book.setDate(LocalDate.now());
             return repository.save(storedBook);
-        }).orElseThrow( () -> new BooksException("No book with id: " + bookId));
+        }).orElseThrow( () -> new BooksException("No book with following ID: " + bookId));
     }
 
 }
