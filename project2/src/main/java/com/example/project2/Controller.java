@@ -19,6 +19,7 @@ public class Controller {
 
     public Controller (BookRepository repository) {
         this.repository = repository;
+
     }
 
     @GetMapping("/getBooks")
@@ -34,7 +35,7 @@ public class Controller {
                 .orElseThrow( () -> new BooksException("No books with id:" + bookId));
     }
 
-    @GetMapping("/getBook/{bookTitle}")
+    @GetMapping("/getBook/{bookTitle")
     public Book getBookByTitle(@PathVariable String bookName) {
         logger.info("Get book by title.");
         return repository.findByBookName(bookName).orElseThrow( ()-> new BooksException("No book with title: " + bookName));
@@ -43,7 +44,7 @@ public class Controller {
     @PostMapping("/addBook")
     public Book create(@RequestBody Book book) {
        logger.info("Book added to repository.");
-        book.setDate(LocalDate.now());
+        //book.setDate(LocalDate.now());
         return repository.save(book);
     }
 
@@ -59,7 +60,7 @@ public class Controller {
         return repository.findById(bookId).map(storedBook -> {
             storedBook.setBookName(book.getBookName());
             storedBook.setDescription(book.getDescription());
-            book.setDate(LocalDate.now());
+//            book.setDate(LocalDate.now());
             return repository.save(storedBook);
         }).orElseThrow( () -> new BooksException("No book with following ID: " + bookId));
     }

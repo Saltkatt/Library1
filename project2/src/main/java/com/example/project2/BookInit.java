@@ -17,10 +17,10 @@ public class BookInit {
 
     public void init(BookRepository repository) {
 
-        LocalDate date = LocalDate.now();
-        repository.save(new Book("Harry Potter", "Magic School", date));
-        repository.save(new Book("Matilda", "A little girl with a powerful mind", date));
-        repository.save(new Book("Miss Marple", "Old lady solving mystries", date));
+  //      LocalDate date = LocalDate.now();
+        repository.save(new Book("Harry Potter", "Magic School"/*, date*/));
+        repository.save(new Book("Matilda", "A little girl with a powerful mind"/*, date*/));
+        repository.save(new Book("Miss Marple", "Old lady solving mystries"/*, date*/));
 
 
     }
