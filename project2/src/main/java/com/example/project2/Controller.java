@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Optional;
 
+/**
+ *Controller sends correct GET, PUT, POST or DELETE
+ * along with instructions regarding what should be done and where information can be found.
+ */
 @RestController
 @RequestMapping("/library")
 public class Controller {
-
-//    @Autowired
-//    private RestTemplate restTemplate;
 
     Logger logger = LoggerFactory.getLogger(Controller.class);
 
@@ -64,6 +65,6 @@ public class Controller {
             return repository.save(storedBook);
         }).orElseThrow( () -> new BooksException("No book with following ID: " + bookId));
     }
-    
+
 
 }
